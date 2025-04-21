@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Syne:wght@400..800&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #000;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+header {
+    margin: 0 auto;
+    width: 64%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-wrapper {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.admin-btn {
+    text-decoration: none;
+    color: rgb(72, 255, 0);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Inter';
+    background-color: transparent;
+    padding: 3px 16px;
+    border: 2px solid green;
+    border-radius: 12px;
+}
+
+.admin-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#logo {
+    color: white;
+    text-decoration: none;
+    font-family: 'Syne';
+    font-size: 24px;
+    font-weight: 800;
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    font-family: 'Inter';
+    font-size: 16px;
+    font-weight: 500;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+#logIn {
+    color: white;
+    text-decoration: none;
+}
+
+/* main section */
+
+/*slideshow*/
+.slideshow {
+    margin: 0 auto;
+    height: 380px;
+    border-radius: 28px;
+}
+
+.slide {
+    margin: 0 auto;
+    width: 64%;
+    background-color: beige;
+    border-radius: 28px;
+}
+
+#event {
+    margin: auto;
+    width: 64%;
+    font-family: 'Inter';
+    color: white;
+    font-size: 42px;
+    padding: 42px 0px 6px 0px;
+}
+
+/* filter bar */
+.filter-bar {
+    margin: 0 auto;
+    width: 64%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+}
+
+.filter-bar button {
+    padding: 8px 18px;
+    background-color: #202020;
+    color: white;
+    border: none;
+    border-radius: 32px;
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+/* ticket gallery */
+.ticket-gallery {
+    margin: auto;
+    width: 64%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;  
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 24px 0;
+}
+
+.card {
+    width: 370px;
+    height: 490px;
+    background-color: black;
+    border: 0.5px solid #202020;
+    border-radius: 1rem;
+    font-family: 'Inter';
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.date {
+    font-size: 14px;
+    font-weight: 500;
+    position: absolute;
+    padding: 10px 12px;
+    background-color: rgba(48,48,48,.8);
+    backdrop-filter: blur(10px);
+    color: white;
+    margin: 12px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.card img {
+    border-radius: 1rem 1rem 0 0;
+}
+
+.card h2 {
+    font-weight: 600;
+    font-size: 20px;
+    padding: 12px;
+    color: #fff;
+}
+
+.info-btn {
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    padding: 12px 42px;
+    border-radius: 6px;
+    margin-left: 12px;
+}
+
+footer {
+    background-color: #111111;
+    font-family: 'Inter';
+    padding: 24px;
+}
+
+.about h2 {
+    font-family: 'Syne';
+    font-weight: 800;
+    font-size: 32px;
+    color: white;
+}
+
+.about p {
+    padding-top: 8px;
+    font-size: 15px;
+    color: #606060;
+}
+
+.footer-container {
+    margin: 0 auto;
+    width: 64%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+}
+
+.footer-p {
+    color: #fff;
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 18px ;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.links a {
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #96a0a0;
+    transition: 0.2s ease-in-out;
+}
+
+.footer {
+    color: #414141;
+    width: 100%;
+    border-top: 0.5px solid rgb(27, 27, 27);
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* login */
+.ball {
+  transition: background-color .5s ease;
+  position: absolute;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(100px);
+  background-color: #ff6200;
+}
+
+
+#login-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    font-family: 'Inter';
+    width: 450px;
+    height: auto;
+    background-color: rgba(25, 25, 25, 0.4);
+    border: 1px solid #262626;
+    color: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 8em 1em 8em 1em;
+}
+
+.text-wrapper {
+    text-align: center;
+    padding: 32px;
+}
+
+.text-wrapper h2 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.text-wrapper p {
+    font-size: 14px;
+    color: #969696;
+}
+
+.form-a {
+    color: #2e92ff;
+    text-decoration: none;
+}
+
+.login-form label {
+    display: inline-block;
+    font-size: 14px;
+    letter-spacing: 0.7px;
+    font-weight: 600;
+    margin-top: 2em;
+}
+
+.login-form input {
+    width: 100%;
+    height: 2.6rem;
+    background-color: rgba(25, 25, 25, 0.8);
+    border: 1px solid #262626;
+    color: #adadad;
+    border-radius: 8px;
+    padding: 10px;
+    outline: none;
+    margin-top: 0.8em;
+    letter-spacing: 0.6px;
+}
+
+.login-form a {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 13px;
+}
+
+input[type="submit"] {
+    font-family: 'Inter';
+    margin: 1em auto 0 auto;
+    background-color: rgba(25, 25, 25);
+    border: 1px solid #262626;
+    color: #acacac;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+@media only screen and (max-width: 600px) {
+
+    header {
+        width: 90%;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .slideshow {
+        width: 90%;
+    }
+
+    .filter-bar {
+        width: 90%;
+    }
+
+    .ticket-gallery {
+        width: 90%;
+    }
+
+    .footer-container {
+        width: 90%;
+    }
+
+    .card {
+        margin: 0 auto;
+    }
+
+    .slide {
+        width: 90%;
+    }
+
+  }
+
+
+/* animations */
+.info-btn:hover {
+    background-color: #f3f3f3;
+}
+
+.links a:hover {
+    color: #fff;
+}
