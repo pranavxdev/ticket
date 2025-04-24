@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['username'] !== 'admin') {
 // Get real statistics
 $user_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM users"))['total'];
 $event_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM events"))['total'];
-$ticket_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM tickets"))['total'];
+$ticket_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT SUM(quantity) AS total FROM tickets"))['total'] ?? 0;
 $revenue = mysqli_fetch_assoc(mysqli_query($conn, "SELECT SUM(t.quantity * e.ticket_price) AS total FROM tickets t JOIN events e ON t.event_id = e.id"))['total'] ?? 0;
 
 // Get recent orders
@@ -84,15 +84,11 @@ $recent_orders = mysqli_query($conn, "SELECT t.*, e.title as event_title, u.user
         }
         
         .homepage-btn {
-            background-color: #4CAF50;
             color: white;
             margin-bottom: 20px;
             transition: background-color 0.3s ease;
         }
         
-        .homepage-btn:hover {
-            background-color: #45a049;
-        }
     </style>
 </head>
 <body>

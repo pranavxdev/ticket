@@ -93,7 +93,6 @@ nav a {
 .slide {
     margin: 0 auto;
     width: 64%;
-    background-color: beige;
     border-radius: 28px;
 }
 
@@ -104,29 +103,6 @@ nav a {
     color: white;
     font-size: 42px;
     padding: 42px 0px 6px 0px;
-}
-
-/* filter bar */
-.filter-bar {
-    margin: 0 auto;
-    width: 64%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    
-}
-
-.filter-bar button {
-    padding: 8px 18px;
-    background-color: #202020;
-    color: white;
-    border: none;
-    border-radius: 32px;
-    font-family: 'Inter';
-    font-weight: 500;
-    font-size: 14px;
-    cursor: pointer;
 }
 
 

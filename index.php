@@ -5,12 +5,21 @@
 <style>
     <?php include 'styles.css' ?>
     
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+    
     .slideshow {
         position: relative;
-        width: 100%;
+        width: 64%;
         height: 500px;
         overflow: hidden;
-        background: #0f0f0f;
+        background: #1a1a1a;
+        margin: 0 auto;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
     .slideshow-container {
@@ -24,16 +33,17 @@
         height: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
+        background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
     }
 
     .slide-content {
         display: flex;
         align-items: center;
-        gap: 42px;
-        padding: 24px;
+        gap: 32px;
+        padding: 16px 32px;
         max-width: 1200px;
-        margin: 0 auto;
+        margin: 0;
     }
 
     .slide-image {
@@ -41,16 +51,18 @@
         height: 300px;
         border-radius: 12px;
         overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
 
     .slide-image img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
     }
 
     .slide-info {
-        color: #000000;
+        color: #ffffff;
         max-width: 500px;
     }
 
@@ -59,7 +71,8 @@
         font-weight: 700;
         margin-bottom: 16px;
         text-transform: uppercase;
-        color: #000000;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .slide-info .event-details {
@@ -72,41 +85,44 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        color: #000000;
+        color: #e0e0e0;
     }
 
     .slide-info .event-detail svg {
         width: 20px;
         height: 20px;
-        stroke: #000000;
+        stroke: #e0e0e0;
     }
 
     .slide-info .event-detail p {
         margin: 0;
         font-size: 16px;
-        color: #000000;
+        color: #e0e0e0;
     }
 
     .slide-info .description {
         font-size: 18px;
-        color: #000000;
+        color: #cccccc;
         margin-bottom: 24px;
         line-height: 1.5;
     }
 
     .slide-info a {
         display: inline-block;
-        background: #000000;
+        background: #4a90e2;
         color: #ffffff;
         padding: 12px 24px;
         border-radius: 24px;
         text-decoration: none;
         font-weight: 600;
         transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(74, 144, 226, 0.3);
     }
 
     .slide-info a:hover {
-        background: #333333;
+        background: #357abd;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
     }
 
     .slideshow-nav {
@@ -122,13 +138,14 @@
         width: 12px;
         height: 12px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.2);
         cursor: pointer;
         transition: all 0.3s ease;
     }
 
     .nav-dot.active {
-        background: white;
+        background: #4a90e2;
+        box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
     }
 
     .slideshow-arrows {
@@ -155,13 +172,14 @@
     }
 
     .arrow:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(74, 144, 226, 0.2);
+        transform: scale(1.1);
     }
 
     .arrow svg {
         width: 24px;
         height: 24px;
-        color: white;
+        color: #ffffff;
     }
 </style>
 
@@ -187,7 +205,7 @@
                 echo "<div class='slide'>
                     <div class='slide-content'>
                         <div class='slide-image'>
-                            <img src='assets/event1.jpg' alt='{$event['title']}'>
+                            <img src='{$event['event_image']}' alt='{$event['title']}'>
                         </div>
                         <div class='slide-info'>
                             <h2>{$event['title']}</h2>
@@ -217,8 +235,7 @@
                                     <p>{$event['location']}</p>
                                 </div>
                             </div>
-                            <p class='description'>{$event['description']}</p>
-                            <a href='event.php?id={$event['id']}'>Get Tickets</a>
+                            <a href='event.php?id={$event['id']}' class='info-btn'>More Info →</a>
                         </div>
                     </div>
                 </div>";

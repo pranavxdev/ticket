@@ -9,6 +9,32 @@
     <title>About Us - DodoRave</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .admin-btn {
+            text-decoration: none;
+            color: rgb(72, 255, 0);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Inter';
+            background-color: transparent;
+            padding: 3px 16px;
+            border: 2px solid green;
+            border-radius: 12px;
+        }
+
+        .admin-user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
         .about-container {
             margin: auto;
             width: 64%;
@@ -56,43 +82,6 @@
             color: #969696;
             line-height: 1.6;
             margin-bottom: 16px;
-        }
-
-        .team-section {
-            margin-top: 64px;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
-        }
-
-        .team-member {
-            background: rgba(25, 25, 25, 0.4);
-            border: 1px solid #262626;
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-        }
-
-        .team-member img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin-bottom: 16px;
-            object-fit: cover;
-        }
-
-        .team-member h3 {
-            color: #fff;
-            margin-bottom: 8px;
-        }
-
-        .team-member p {
-            color: #969696;
-            font-size: 14px;
         }
 
         .contact-section {
@@ -145,22 +134,6 @@
                 <h2>What We Do</h2>
                 <p>DodoRave is your one-stop platform for discovering and booking tickets to various events, from music festivals and concerts to beach parties and cultural gatherings.</p>
                 <p>We provide a secure, user-friendly platform that makes it easy to browse events, purchase tickets, and manage your bookings all in one place.</p>
-            </div>
-        </div>
-
-        <div class="team-section">
-            <h2>Our Team</h2>
-            <div class="team-grid">
-                <div class="team-member">
-                    <img src="assets/team1.jpg" alt="Team Member">
-                    <h3>John Doe</h3>
-                    <p>Founder & CEO</p>
-                </div>
-                <div class="team-member">
-                    <img src="assets/team2.jpg" alt="Team Member">
-                    <h3>Jane Smith</h3>
-                    <p>Event Manager</p>
-                </div>
             </div>
         </div>
 

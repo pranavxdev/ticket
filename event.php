@@ -64,27 +64,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['buy_tickets'])) {
 
     <style>
         body {
-            font-family: 'inter';
+            font-family: 'Inter', sans-serif;
         }
-        .slide-container{
+        .slide {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border-radius: 16px;
+            margin: 24px auto;
+            width: 64%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .slide-container {
             height: fit-content;
-            padding: 24px;
+            padding: 32px;
             display: flex;
             align-items: center;
-            gap: 42px;
+            gap: 48px;
             flex-wrap: wrap;
         }
 
-        .e-info {
-            font-family: 'Inter';
+        .img-wrapper {
+            width: 400px;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .e-info h2{
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .e-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .e-info h2 {
             font-size: 48px;
-            font-family: 'Inter';
             font-weight: 700;
             color: white;
             text-transform: uppercase;
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .e-info p {
+            font-size: 18px;
+            color: #e0e0e0;
+            margin-bottom: 24px;
         }
 
         .container {
@@ -188,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['buy_tickets'])) {
 <body>
     <div class="slide">
         <div class="slide-container">
-            <div class="img-wrapper" style="width: 320px;">
+            <div class="img-wrapper">
                 <img src="assets/event1.jpg" alt="" style="width: 100%; border-radius: 12px;">
             </div>
                     

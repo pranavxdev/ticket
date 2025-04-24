@@ -9,6 +9,32 @@
     <title>Help & Support - DodoRave</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .admin-btn {
+            text-decoration: none;
+            color: rgb(72, 255, 0);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Inter';
+            background-color: transparent;
+            padding: 3px 16px;
+            border: 2px solid green;
+            border-radius: 12px;
+        }
+
+        .admin-user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
         .help-container {
             margin: auto;
             width: 64%;

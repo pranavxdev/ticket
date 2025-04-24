@@ -30,6 +30,26 @@ if (!isset($_SESSION['user_id'])) {
             font-family: 'Inter';
         }
 
+        .admin-btn {
+            text-decoration: none;
+            color: rgb(72, 255, 0);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Inter';
+            background-color: transparent;
+            padding: 3px 16px;
+            border: 2px solid green;
+            border-radius: 12px;
+        }
+
+        .admin-user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
         .user-info {
             margin: auto;
             width: 64%;
