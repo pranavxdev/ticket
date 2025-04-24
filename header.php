@@ -6,7 +6,7 @@
 
         <nav>
             <a href="aboutus.php">About us</a>
-            <a href="">Help</a>
+            <a href="help.php">Help</a>
         </nav>
     </div>
 

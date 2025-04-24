@@ -5,10 +5,12 @@
 include 'db.php';
 
 $username = "";
+$email = "";
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
     // Check if fields are empty
@@ -16,12 +18,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors['username'] = "Username is required.";
     }
 
+    if (empty($email)) {
+        $errors['email'] = "Email is required.";
+    }
+
     if (empty($password)) {
         $errors['password'] = "Password is required.";
     }
 
     if (count($errors) == 0) {
-        $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
+        $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username' AND email = '$email'");
         if (mysqli_num_rows($result) == 1) {
             $user = mysqli_fetch_assoc($result);
 
@@ -37,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $errors['password'] = "Wrong password.";
             }
         } else {
-            $errors['username'] = "No account found with that username.";
+            $errors['username'] = "No account found with that username and email.";
         }
     }
 }
@@ -51,6 +57,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dodo Rave - Log in & Registration</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        function validateLoginForm() {
+            let isValid = true;
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Reset error messages
+            document.getElementById('username-error').textContent = '';
+            document.getElementById('email-error').textContent = '';
+            document.getElementById('password-error').textContent = '';
+            
+            // Validate username
+            if (username === '') {
+                document.getElementById('username-error').textContent = 'Username is required.';
+                isValid = false;
+            }
+            
+            // Validate email
+            if (email === '') {
+                document.getElementById('email-error').textContent = 'Email is required.';
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                document.getElementById('email-error').textContent = 'Invalid email format.';
+                isValid = false;
+            }
+            
+            // Validate password
+            if (password === '') {
+                document.getElementById('password-error').textContent = 'Password is required.';
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
 </head>
 <body>
     <main id="login-main">
@@ -65,14 +112,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p>Not a member yet? <a href="registration.php" class="form-a">Create my account</a></p>
                 </div>
                 
-                <form action="" class="login-form" method="post">
+                <form action="" class="login-form" method="post" onsubmit="return validateLoginForm()">
                     <label>Username:</label>
-                    <input type="text" name="username" value="<?php echo $username; ?>">
-                    <?php if (!empty($errors['username'])) { echo "<p style='color:red'>" . $errors['username'] . "</p>"; } ?>
+                    <input type="text" name="username" id="username" value="<?php echo $username; ?>">
+                    <p id="username-error" style="color:red;"><?php if (!empty($errors['username'])) echo $errors['username']; ?></p>
+
+                    <label>Email:</label>
+                    <input type="email" name="email" id="email" value="<?php echo $email; ?>">
+                    <p id="email-error" style="color:red;"><?php if (!empty($errors['email'])) echo $errors['email']; ?></p>
 
                     <label>Password:</label>
-                    <input type="password" name="password"><br>
-                    <?php if (!empty($errors['password'])) { echo "<p style='color:red'>" . $errors['password'] . "</p>"; } ?>
+                    <input type="password" name="password" id="password">
+                    <p id="password-error" style="color:red;"><?php if (!empty($errors['password'])) echo $errors['password']; ?></p>
 
                     <input type="submit" value="Sign in & continue">
                 </form>
