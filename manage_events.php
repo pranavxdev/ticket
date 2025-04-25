@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
     $total_tickets = intval($_POST['total_tickets']);
     $ticket_price = floatval($_POST['ticket_price']);
     $event_image = mysqli_real_escape_string($conn, $_POST['event_image']);
+    $featured = intval($_POST['featured']);
     
     if (isset($_POST['event_id'])) {
         // Update existing event
@@ -46,12 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
                   time = '$time',
                   total_tickets = $total_tickets,
                   ticket_price = $ticket_price,
-                  event_image = '$event_image'
+                  event_image = '$event_image',
+                  featured = $featured
                   WHERE id = $event_id";
     } else {
         // Create new event
-        $query = "INSERT INTO events (title, description, location, date, time, total_tickets, ticket_price, event_image) 
-                  VALUES ('$title', '$description', '$location', '$date', '$time', $total_tickets, $ticket_price, '$event_image')";
+        $query = "INSERT INTO events (title, description, location, date, time, total_tickets, ticket_price, event_image, featured) 
+                  VALUES ('$title', '$description', '$location', '$date', '$time', $total_tickets, $ticket_price, '$event_image', $featured)";
     }
     
     mysqli_query($conn, $query);
@@ -69,10 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
     <link rel="stylesheet" href="admin.css" />
     <style>
         .event-form {
-            background: white;
+            background: #ffffff;
             padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
+            border: 1px solid #e5e5e5;
         }
         
         .event-form input[type="text"],
@@ -84,29 +87,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             width: 100%;
             padding: 8px;
             margin: 5px 0 15px;
-            border: 1px solid #ddd;
+            border: 1px solid #e5e5e5;
             border-radius: 4px;
+            background: #ffffff;
+            color: #000000;
         }
         
         .event-form button {
-            background: #111;
-            color: white;
+            background: #2563eb;
+            color: #ffffff;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
         
         .event-form button:hover {
-            background: #333;
+            background: #1d4ed8;
         }
 
         .image-preview {
             margin: 10px 0;
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #e5e5e5;
             border-radius: 4px;
-            background: #f9f9f9;
+            background: #ffffff;
         }
 
         .image-preview img {
@@ -121,57 +127,139 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
         }
         
         .event-item {
-            background: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 4px;
+            background: #ffffff;
+            padding: 24px;
+            margin-bottom: 24px;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            border: 1px solid #e5e5e5;
         }
 
         .event-info {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            gap: 32px;
+            flex: 1;
         }
 
         .event-info img {
-            border-radius: 4px;
+            width: 140px;
+            height: 140px;
+            border-radius: 8px;
             object-fit: cover;
-            height: 100px;
+        }
+
+        .event-details {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .event-details h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #000000;
+            margin: 0;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .featured-badge {
+            background: #2563eb;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .event-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .event-meta p {
+            font-size: 15px;
+            color: #666666;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 1.4;
+        }
+
+        .event-meta p svg {
+            width: 18px;
+            height: 18px;
+            color: #666666;
+            flex-shrink: 0;
+        }
+
+        .event-stats {
+            display: flex;
+            gap: 24px;
+            margin-top: 8px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .event-stat {
+            font-size: 14px;
+            color: #666666;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .event-stat svg {
+            width: 16px;
+            height: 16px;
+            color: #666666;
+            flex-shrink: 0;
         }
         
         .event-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            margin-left: 32px;
         }
         
         .event-actions button {
-            padding: 5px 10px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            min-width: 100px;
+            text-align: center;
         }
         
         .edit-btn {
-            background: #4CAF50;
-            color: white;
+            background: #2563eb;
+            color: #ffffff;
+        }
+        
+        .edit-btn:hover {
+            background: #1d4ed8;
         }
         
         .delete-btn {
-            background: #f44336;
-            color: white;
+            background: #dc2626;
+            color: #ffffff;
         }
         
-        .homepage-btn {
-            background-color: #4CAF50;
-            color: white;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .homepage-btn:hover {
-            background-color: #45a049;
+        .delete-btn:hover {
+            background: #b91c1c;
         }
     </style>
 </head>
@@ -182,12 +270,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
                 <h2>Admin Panel</h2>
             </div>
             <nav>
-                <a href="index.php" class="homepage-btn"><i class="fas fa-globe"></i> Homepage</a>
-                <a href="admin.php"><i class="fas fa-home"></i> Dashboard</a>
-                <a href="manage_events.php" class="active"><i class="fas fa-calendar"></i> Manage Events</a>
-                <a href="manage_users.php"><i class="fas fa-users"></i> Manage Users</a>
-                <a href="manage_orders.php"><i class="fas fa-ticket-alt"></i> Manage Orders</a>
-                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="index.php" class="homepage-btn">Homepage</a>
+                <a href="admin.php">Dashboard</a>
+                <a href="manage_events.php" class="active">Manage Events</a>
+                <a href="manage_users.php">Manage Users</a>
+                <a href="manage_orders.php">Manage Orders</a>
+                <a href="logout.php">Logout</a>
             </nav>
         </aside>
 
@@ -258,6 +346,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
                         <input type="number" id="ticket_price" name="ticket_price" min="0" step="0.01" required>
                     </div>
                     
+                    <div>
+                        <label for="featured">Featured Event</label>
+                        <select id="featured" name="featured" required>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    
                     <button type="submit" name="save_event">Save Event</button>
                 </form>
             </div>
@@ -272,12 +368,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
                     $event_image = isset($event['event_image']) ? $event['event_image'] : 'assets/event1.jpg';
                     echo "<div class='event-item'>
                         <div class='event-info'>
-                            <img src='{$event_image}' alt='{$event['title']}' style='max-width: 100px; margin-right: 15px;'>
-                            <div>
-                                <h3>{$event['title']}</h3>
-                                <p>Date: {$event['date']} | Time: {$event['time']}</p>
-                                <p>Location: {$event['location']}</p>
-                                <p>Tickets: {$event['total_tickets']} | Price: MUR " . number_format($event['ticket_price'], 2) . "</p>
+                            <img src='{$event_image}' alt='{$event['title']}'>
+                            <div class='event-details'>
+                                <h3>
+                                    {$event['title']}
+                                    " . ($event['featured'] == 1 ? '<span class="featured-badge">Featured</span>' : '') . "
+                                </h3>
+                                <div class='event-meta'>
+                                    <p>
+                                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                                            <path d='M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z'></path>
+                                            <path d='M16 3l0 4'></path>
+                                            <path d='M8 3l0 4'></path>
+                                            <path d='M4 11l16 0'></path>
+                                            <path d='M8 15h2v2h-2z'></path>
+                                        </svg>
+                                        " . date('d M Y', strtotime($event['date'])) . "
+                                    </p>
+                                    <p>
+                                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                                            <circle cx='12' cy='12' r='10'></circle>
+                                            <polyline points='12 6 12 12 16 14'></polyline>
+                                        </svg>
+                                        {$event['time']}
+                                    </p>
+                                    <p>
+                                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                                            <path d='M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z'></path>
+                                            <path d='M12 21c-4.418 0 -8 -3.582 -8 -8c0 -5.418 8 -13 8 -13s8 7.582 8 13c0 4.418 -3.582 8 -8 8z'></path>
+                                        </svg>
+                                        {$event['location']}
+                                    </p>
+                                </div>
+                                <div class='event-stats'>
+                                    <div class='event-stat'>
+                                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                                            <path d='M15 5h2a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2z'></path>
+                                            <path d='M9 5h2a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2z'></path>
+                                            <path d='M5 5h2a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2z'></path>
+                                        </svg>
+                                        {$event['total_tickets']} tickets
+                                    </div>
+                                    <div class='event-stat'>
+                                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                                            <path d='M12 2v20'></path>
+                                            <path d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'></path>
+                                        </svg>
+                                        MUR " . number_format($event['ticket_price'], 2) . "
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class='event-actions'>

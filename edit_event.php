@@ -37,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
     $total_tickets = intval($_POST['total_tickets']);
     $ticket_price = floatval($_POST['ticket_price']);
     $event_image = mysqli_real_escape_string($conn, $_POST['event_image']);
+    $featured = intval($_POST['featured']);
     
     $update_query = "UPDATE events SET 
                     title = '$title',
@@ -46,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
                     time = '$time',
                     total_tickets = $total_tickets,
                     ticket_price = $ticket_price,
-                    event_image = '$event_image'
+                    event_image = '$event_image',
+                    featured = $featured
                     WHERE id = $event_id";
     
     if(mysqli_query($conn, $update_query)) {
@@ -195,6 +197,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
                     <div>
                         <label for="ticket_price">Ticket Price (MUR)</label>
                         <input type="number" id="ticket_price" name="ticket_price" min="0" step="0.01" value="<?php echo $event['ticket_price']; ?>" required>
+                    </div>
+                    
+                    <div>
+                        <label for="featured">Featured Event</label>
+                        <select id="featured" name="featured" required>
+                            <option value="0" <?php echo $event['featured'] == 0 ? 'selected' : ''; ?>>No</option>
+                            <option value="1" <?php echo $event['featured'] == 1 ? 'selected' : ''; ?>>Yes</option>
+                        </select>
                     </div>
                     
                     <button type="submit" name="save_event">Update Event</button>

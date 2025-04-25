@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Syne:wght@400..800&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -25,6 +26,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-family: 'Inter';
 }
 
 .header-wrapper {
@@ -65,7 +67,6 @@ header {
 nav {
     display: flex;
     gap: 18px;
-    font-family: 'Georgia', serif;
     font-size: 16px;
     font-weight: 500;
     margin-left: auto;
@@ -74,6 +75,20 @@ nav {
 nav a {
     color: white;
     text-decoration: none;
+    font-family: 'Inter';
+}
+
+.admin-btn {
+    text-decoration: none;
+    color: rgb(72, 255, 0);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Inter';
+    background-color: transparent;
+    padding: 3px 16px;
+    border: 2px solid green;
+    border-radius: 12px;
 }
 
 #logIn {
@@ -85,15 +100,186 @@ nav a {
 
 /*slideshow*/
 .slideshow {
+    width: 64%;
+    height: auto;
+    min-height: 400px;
+    overflow: hidden;
+    background: rgba(25, 25, 25, 0.4);
+    border: 1px solid #262626;
     margin: 0 auto;
-    height: 380px;
-    border-radius: 28px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.slideshow-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    position: relative;
+    padding-bottom: 60px;
 }
 
 .slide {
-    margin: 0 auto;
-    width: 64%;
-    border-radius: 28px;
+    min-width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding: 12px 0px 12px 12px;
+}
+
+.slide-content {
+    display: flex;
+    align-items: flex-end;
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0;
+    background-color: transparent;
+    padding: 24px;
+}
+
+.slide-image {
+    width: 400px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.slide-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.slide-info {
+    color: #ffffff;
+    font-family: 'Inter';
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
+    padding-bottom: 0;
+}
+
+.slide-info h2 {
+    font-size: clamp(24px, 5vw, 48px);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
+}
+
+.slide-info .event-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 0;
+}
+
+.slide-info .event-detail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #e0e0e0;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+
+.slide-info .event-detail svg {
+    width: 20px;
+    height: 20px;
+    stroke: #e0e0e0;
+}
+
+.slide-info .event-detail p {
+    margin: 0;
+    font-size: clamp(14px, 2vw, 16px);
+    color: #e0e0e0;
+}
+
+.slide-info .description {
+    font-size: clamp(14px, 2vw, 18px);
+    color: #cccccc;
+    line-height: 1.5;
+}
+
+.slide-info a {
+    display: inline-block;
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    padding: 12px 32px;
+    font-weight: 500;
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+.slideshow-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    gap: 12px;
+    z-index: 2;
+    width: 100%;
+    justify-content: center;
+    padding: 20px 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+}
+
+.nav-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-dot.active {
+    background: #4a90e2;
+    box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+}
+
+.slideshow-arrows {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 2;
+    padding-bottom: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+}
+
+.arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.arrow:hover {
+    background: rgba(74, 144, 226, 0.2);
+    transform: scale(1.1);
+}
+
+.arrow svg {
+    width: 24px;
+    height: 24px;
+    color: #ffffff;
 }
 
 #event {
@@ -127,8 +313,10 @@ nav a {
     font-family: 'Inter';
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0;
     align-items: flex-start;
+    position: relative;
+    overflow: hidden;
 }
 
 .date {
@@ -144,17 +332,29 @@ nav a {
     display: flex;
     align-items: center;
     gap: 6px;
+    z-index: 1;
 }
 
 .card img {
     border-radius: 1rem 1rem 0 0;
 }
 
+.card-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), black);
+}
+
 .card h2 {
     font-weight: 600;
     font-size: 20px;
-    padding: 12px;
     color: #fff;
+    margin: 0;
+    line-height: 1.4;
 }
 
 .info-btn {
@@ -163,9 +363,18 @@ nav a {
     text-decoration: none;
     color: black;
     background-color: white;
-    padding: 12px 42px;
+    padding: 12px 32px;
     border-radius: 6px;
-    margin-left: 12px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    margin-top: auto;
+}
+
+.info-btn:hover {
+    background-color: #f3f3f3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
 }
 
 footer {
@@ -230,16 +439,16 @@ footer {
 .ball {
   transition: background-color .5s ease;
   position: absolute;
-  top: auto;
-  left: auto;
-  right: auto;
-  bottom: auto;
-  width: 300px;
-  height: 300px;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
   border-radius: 50%;
   z-index: -1;
   filter: blur(100px);
   background-color: #ff6200;
+  opacity: 0.4;
 }
 
 
@@ -247,6 +456,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .login-container {
@@ -355,6 +565,104 @@ input[type="submit"] {
 
   }
 
+
+/* Responsive Styles for Slideshow */
+@media screen and (max-width: 1024px) {
+    .slideshow {
+        width: 95%;
+    }
+
+    .slide-content {
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .slide-image {
+        width: 350px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .slide-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 16px;
+    }
+
+    .slide-image {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .slide-info {
+        max-width: 100%;
+        align-items: center;
+    }
+
+    .slide-info .event-details {
+        justify-content: center;
+    }
+
+    .slide-info a {
+        align-self: center;
+    }
+
+    .slideshow-arrows {
+        padding: 0 12px;
+    }
+
+    .arrow {
+        width: 32px;
+        height: 32px;
+    }
+
+    .arrow svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .slideshow {
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .slide {
+        padding: 0;
+    }
+
+    .slide-content {
+        padding: 12px;
+    }
+
+    .slide-info h2 {
+        font-size: 24px;
+    }
+
+    .slide-info .event-detail {
+        padding: 6px 12px;
+    }
+
+    .slide-info .event-detail p {
+        font-size: 14px;
+    }
+
+    .slide-info a {
+        padding: 10px 24px;
+        font-size: 14px;
+    }
+
+    .slideshow-nav {
+        bottom: 12px;
+    }
+
+    .nav-dot {
+        width: 8px;
+        height: 8px;
+    }
+}
 
 /* animations */
 .info-btn:hover {

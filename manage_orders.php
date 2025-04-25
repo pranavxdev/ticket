@@ -30,10 +30,11 @@ if (isset($_POST['delete_order'])) {
         }
         
         .order-item {
-            background: white;
+            background: #ffffff;
             padding: 15px;
             margin-bottom: 10px;
             border-radius: 4px;
+            border: 1px solid #e5e5e5;
         }
         
         .order-header {
@@ -42,7 +43,7 @@ if (isset($_POST['delete_order'])) {
             align-items: center;
             margin-bottom: 10px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #e5e5e5;
         }
         
         .order-info {
@@ -51,12 +52,12 @@ if (isset($_POST['delete_order'])) {
         
         .order-info h3 {
             margin: 0 0 5px 0;
-            color: #333;
+            color: #000000;
         }
         
         .order-info p {
             margin: 0;
-            color: #666;
+            color: #666666;
         }
         
         .order-actions {
@@ -72,8 +73,12 @@ if (isset($_POST['delete_order'])) {
         }
         
         .delete-btn {
-            background: #f44336;
-            color: white;
+            background: #000000;
+            color: #ffffff;
+        }
+        
+        .delete-btn:hover {
+            background: #333333;
         }
         
         .filter-bar {
@@ -84,8 +89,10 @@ if (isset($_POST['delete_order'])) {
         
         .filter-bar select {
             padding: 8px;
-            border: 1px solid #ddd;
+            border: 1px solid #e5e5e5;
             border-radius: 4px;
+            background: #ffffff;
+            color: #000000;
         }
         
         .search-box {
@@ -93,19 +100,10 @@ if (isset($_POST['delete_order'])) {
             padding: 10px;
             width: 100%;
             max-width: 300px;
-            border: 1px solid #ddd;
+            border: 1px solid #e5e5e5;
             border-radius: 4px;
-        }
-        
-        .homepage-btn {
-            background-color: #4CAF50;
-            color: white;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .homepage-btn:hover {
-            background-color: #45a049;
+            background: #ffffff;
+            color: #000000;
         }
     </style>
 </head>
@@ -116,12 +114,12 @@ if (isset($_POST['delete_order'])) {
                 <h2>Admin Panel</h2>
             </div>
             <nav>
-                <a href="index.php" class="homepage-btn"><i class="fas fa-globe"></i> Homepage</a>
-                <a href="admin.php"><i class="fas fa-home"></i> Dashboard</a>
-                <a href="manage_events.php"><i class="fas fa-calendar"></i> Manage Events</a>
-                <a href="manage_users.php"><i class="fas fa-users"></i> Manage Users</a>
-                <a href="manage_orders.php" class="active"><i class="fas fa-ticket-alt"></i> Manage Orders</a>
-                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="index.php" class="homepage-btn"></i> Homepage</a>
+                <a href="admin.php">Dashboard</a>
+                <a href="manage_events.php">Manage Events</a>
+                <a href="manage_users.php">Manage Users</a>
+                <a href="manage_orders.php" class="active">Manage Orders</a>
+                <a href="logout.php">Logout</a>
             </nav>
         </aside>
 

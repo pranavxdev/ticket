@@ -9,10 +9,10 @@
     <title>Help & Support - DodoRave</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-        * {
-            font-family: 'Inter', sans-serif;
+
+        body {
+            font-family: 'Inter';
         }
 
         .admin-btn {
@@ -188,7 +188,7 @@
                         </svg>
                     </div>
                     <div class="faq-answer">
-                        Refunds are available up to 48 hours before the event start time. After this period, tickets are non-refundable. To request a refund, please contact our support team with your order details.
+                        Unfortunatly, we do not offer refunds. Purchases are considered final and there are not period for withdrawals. However, if the event you have bought tickets for is cancelled, you may be eligible for a refund.
                     </div>
                 </div>
 
@@ -200,7 +200,7 @@
                         </svg>
                     </div>
                     <div class="faq-answer">
-                        Yes, tickets can be transferred to another user up to 24 hours before the event. To transfer tickets, go to your dashboard, select the tickets you want to transfer, and enter the recipient's email address.
+                        Tickets are non-transferable once purchased. 
                     </div>
                 </div>
             </div>

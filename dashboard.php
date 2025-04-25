@@ -1,20 +1,14 @@
-<?php 
-session_start();
-include 'header.php';
+<?php session_start(); ?>
+<?php include 'header.php';?>
+<?php include 'db.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 
-?>
-
-
-<?php
-    include 'db.php';
-
-    $user_id = $_SESSION['user_id'];
-    $username = $_SESSION['username'];
+$user_id = $_SESSION['user_id'];
+$username = $_SESSION['username'];
 ?>
 
 <!DOCTYPE html>
@@ -22,311 +16,304 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - DodoRave</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            color: white;
-            font-family: 'Inter';
+            font-family: 'Inter', sans-serif;
+            background: #0f0f0f;
         }
 
-        .admin-btn {
-            text-decoration: none;
-            color: rgb(72, 255, 0);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Inter';
-            background-color: transparent;
-            padding: 3px 16px;
-            border: 2px solid green;
-            border-radius: 12px;
+        .ball {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(46, 146, 255, 0.15) 0%, rgba(46, 146, 255, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
         }
 
-        .admin-user {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-info {
-            margin: auto;
+        .container {
             width: 64%;
-            border-bottom: 0.5px solid rgb(27, 27, 27);
-            padding: 64px 2px 24px 2px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            margin: 0 auto;
+            padding-bottom: 48px;
         }
 
-        .pfp {
-            width: 100px;
-            height: 100px;
-            border-radius: 360px;
-            background-color: rgba(48,48,48,.8);
-            backdrop-filter: blur(10px);
+        /* User Profile Section */
+        .profile {
+            background: rgba(26, 26, 26, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 42px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .wallet-section {
-            margin: auto;
-            width: 64%;
-            padding: 24px 0;
-        }
-
-        .wallet-section h3 {
-            font-size: 24px;
-            padding: 18px 2px;
-            margin-bottom: 24px;
-        }
-
-        .ticket-section {
-            margin-bottom: 48px;
-        }
-
-        .ticket-section h4 {
-            font-size: 18px;
-            color: #969696;
-            margin-bottom: 24px;
-            padding-left: 2px;
-        }
-
-        .ticket-gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
-            width: 100%;
+            justify-content: space-between;
         }
 
-        .card {
-            width: 100%;
-            background-color: black;
-            border: 0.5px solid #202020;
-            border-radius: 1rem;
-            font-family: 'Inter';
+        .user-profile {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: flex-start;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: #2e92ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .user-info h2 {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .user-info p {
+            color: #969696;
+            font-size: 14px;
+        }
+
+        /* Tickets Section */
+        .tickets {
+            margin-top: 32px;
+        }
+
+        .tickets h3 {
+            font-size: 18px;
+            text-transform: uppercase;
+            color: white;
+            margin-bottom: 24px;
+        }
+
+        .ticket-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        /* Ticket Card */
+        .ticket {
+            background: rgba(26, 26, 26, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .ticket-img {
+            width: 100%;
+            height: 200px;
             position: relative;
-            transition: transform 0.2s ease;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card.past-event {
-            opacity: 0.7;
+        .ticket-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .date {
-            font-size: 14px;
-            font-weight: 500;
             position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(48, 48, 48, 0.8);
             padding: 10px 12px;
-            background-color: rgba(48,48,48,.8);
-            backdrop-filter: blur(10px);
-            color: white;
-            margin: 12px;
             border-radius: 6px;
+            color: white;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 6px;
-            z-index: 1;
         }
 
-        .card img {
-            width: 100%;
-            border-radius: 1rem 1rem 0 0;
-            object-fit: cover;
-            height: 200px;
+        .ticket-info {
+            padding: 24px;
         }
 
-        .card h2 {
-            font-weight: 600;
+        .ticket-info h4 {
             font-size: 20px;
-            padding: 12px;
-            color: #fff;
+            color: white;
+            margin-bottom: 12px;
         }
 
-        .ticket-details {
-            padding: 12px;
-            background: rgba(25, 25, 25, 0.4);
-            border: 1px solid #262626;
-            border-radius: 12px;
-            margin: 12px;
-            width: calc(100% - 24px);
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
         }
 
-        .ticket-details p {
+        .detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             color: #969696;
             font-size: 14px;
-            margin: 8px 0;
         }
 
-        #logout {
-            color: red;
-            background-color: transparent;
-            border: 2px solid red;
-            border-radius: 6px;
-            padding: 6px 56px;
-            font-family: 'Inter';
+        .detail svg {
+            width: 16px;
+            height: 16px;
+            color: #2e92ff;
+        }
+
+        .ticket-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quantity {
+            color: white;
+            font-size: 14px;
+        }
+
+        .price {
+            color: #2e92ff;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* Logout Button */
+        .logout {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 20px;
+            border: none;
+            font-size: 14px;
             cursor: pointer;
-            transition: 0.15s ease-in-out;
+            margin-left: auto;
+            transition: all 0.3s ease;
+        }
+
+        .logout:hover {
+            background: #dc2626;
+            color: white;
         }
 
         /* Responsive Design */
         @media (max-width: 1200px) {
-            .ticket-gallery {
-                grid-template-columns: repeat(2, 1fr);
+            .container {
+                width: 80%;
             }
         }
 
         @media (max-width: 768px) {
-            .ticket-gallery {
-                grid-template-columns: 1fr;
-            }
-            
-            .wallet-section {
+            .container {
                 width: 90%;
             }
-        }
 
-        /* Animations */
-        #logout:hover {
-            background-color: red;
-            color: white;
+            .ticket-list {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="ball"></div>
+    <div class="container">
+        <!-- User Profile -->
+        <div class="profile">
+            <div class="user-profile">
+                <div class="avatar">
+                        <?php echo strtoupper(substr($username, 0, 1)); ?>
+                    </div>
+                <div class="user-info">
+                    <h2>@<?php echo $username; ?></h2>
+                    <p>Welcome back to your dashboard</p>
+                </div>
+            </div>
 
-    <section class="user-info">
-        <div class="pfp"> <?php echo substr($username, 0, 1)?> </div>
+            <form action="logout.php" method="post">
+                <button type="submit" class="logout">Log Out</button>
+            </form>
+        </div>
 
-        <h2>@<?php echo $username ?></h2>
+        <!-- Tickets Section -->
+        <div class="tickets">
+            <h3>My Tickets</h3>
+            <div class="ticket-list">
+                <?php
+                $ticket_query = "SELECT 
+                    e.id as event_id,
+                    e.title, 
+                    e.date, 
+                    e.time, 
+                    e.location, 
+                    e.ticket_price,
+                    e.event_image,
+                    SUM(t.quantity) as total_quantity,
+                    MAX(t.purchase_date) as purchase_date
+                FROM tickets t 
+                JOIN events e ON t.event_id = e.id 
+                WHERE t.user_id = $user_id 
+                GROUP BY e.id
+                ORDER BY e.date ASC";
 
-        <form action="logout.php" method="post" class="form">
-            <button type="submit" id="logout">Log Out</button>
-        </form>
-    </section>
+                $ticket_result = mysqli_query($conn, $ticket_query);
 
-    <section class="wallet-section">
-        <h3>My Wallet</h3>
-
-        <?php
-        // Get user's tickets with event details, grouped by event
-        $ticket_query = "SELECT 
-                           e.id as event_id,
-                           e.title, 
-                           e.date, 
-                           e.time, 
-                           e.location, 
-                           e.ticket_price,
-                           SUM(t.quantity) as total_quantity,
-                           MAX(t.purchase_date) as purchase_date
-                       FROM tickets t 
-                       JOIN events e ON t.event_id = e.id 
-                       WHERE t.user_id = $user_id 
-                       GROUP BY e.id
-                       ORDER BY e.date ASC, t.purchase_date DESC";
-        $ticket_result = mysqli_query($conn, $ticket_query);
-
-        if (mysqli_num_rows($ticket_result) > 0) {
-            $upcoming_tickets = [];
-            $past_tickets = [];
-            $current_date = date('Y-m-d');
-
-            while ($ticket = mysqli_fetch_assoc($ticket_result)) {
-                if ($ticket['date'] >= $current_date) {
-                    $upcoming_tickets[] = $ticket;
+                if (mysqli_num_rows($ticket_result) > 0) {
+                    while ($ticket = mysqli_fetch_assoc($ticket_result)) {
+                        echo "<div class='ticket'>
+                            <div class='ticket-img'>
+                                <img src='{$ticket['event_image']}' alt='{$ticket['title']}'>
+                                <div class='date'>
+                                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                                        <path d='M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z'></path>
+                                        <path d='M16 3l0 4'></path>
+                                        <path d='M8 3l0 4'></path>
+                                        <path d='M4 11l16 0'></path>
+                                    </svg>
+                                    " . date('d M Y', strtotime($ticket['date'])) . "
+                                </div>
+                            </div>
+                            <div class='ticket-info'>
+                                <h4>{$ticket['title']}</h4>
+                                <div class='details'>
+                                    <div class='detail'>
+                                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                                            <circle cx='12' cy='12' r='10'></circle>
+                                            <polyline points='12 6 12 12 16 14'></polyline>
+                                        </svg>
+                                        {$ticket['time']}
+                                    </div>
+                                    <div class='detail'>
+                                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                                            <path d='M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z'></path>
+                                            <path d='M12 21c-4.418 0 -8 -3.582 -8 -8c0 -5.418 8 -13 8 -13s8 7.582 8 13c0 4.418 -3.582 8 -8 8z'></path>
+                                        </svg>
+                                        {$ticket['location']}
+                                    </div>
+                                </div>
+                                <div class='ticket-footer'>
+                                    <div class='quantity'>{$ticket['total_quantity']} tickets</div>
+                                    <div class='price'>MUR " . number_format($ticket['ticket_price'] * $ticket['total_quantity'], 2) . "</div>
+                                </div>
+                            </div>
+                        </div>";
+                    }
                 } else {
-                    $past_tickets[] = $ticket;
+                    echo "<p style='color: #969696; text-align: center;'>No tickets purchased yet.</p>";
                 }
-            }
+                ?>
+            </div>
+        </div>
+    </div>
 
-            // Display Upcoming Events
-            if (!empty($upcoming_tickets)) {
-                echo "<div class='ticket-section'>
-                    <h4>Upcoming Events</h4>
-                    <div class='ticket-gallery'>";
-                
-                foreach ($upcoming_tickets as $ticket) {
-                    echo "<div class='card'>
-                        <div class='date'>
-                            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' width='20' height='20' stroke-width='2' stroke-linejoin='round' stroke-linecap='round' stroke='currentColor'>
-                                <path d='M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z'></path>
-                                <path d='M16 3l0 4'></path>
-                                <path d='M8 3l0 4'></path>
-                                <path d='M4 11l16 0'></path>
-                                <path d='M8 15h2v2h-2z'></path>
-                            </svg>
-                            <p>{$ticket['date']}</p>
-                        </div>
-                        <img src='assets/event1.jpg' alt='' style='width: 100%;'>
-                        <h2>{$ticket['title']}</h2>
-                        <div class='ticket-details'>
-                            <p>Quantity: {$ticket['total_quantity']}</p>
-                            <p>Total: MUR " . number_format($ticket['ticket_price'] * $ticket['total_quantity'], 2) . "</p>
-                            <p>Location: {$ticket['location']}</p>
-                            <p>Time: {$ticket['time']}</p>
-                            <p>Purchased: " . date('d M Y', strtotime($ticket['purchase_date'])) . "</p>
-                        </div>
-                    </div>";
-                }
-                echo "</div></div>";
-            }
-
-            // Display Past Events
-            if (!empty($past_tickets)) {
-                echo "<div class='ticket-section'>
-                    <h4>Past Events</h4>
-                    <div class='ticket-gallery'>";
-                
-                foreach ($past_tickets as $ticket) {
-                    echo "<div class='card'>
-                        <div class='date'>
-                            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' width='20' height='20' stroke-width='2' stroke-linejoin='round' stroke-linecap='round' stroke='currentColor'>
-                                <path d='M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z'></path>
-                                <path d='M16 3l0 4'></path>
-                                <path d='M8 3l0 4'></path>
-                                <path d='M4 11l16 0'></path>
-                                <path d='M8 15h2v2h-2z'></path>
-                            </svg>
-                            <p>{$ticket['date']}</p>
-                        </div>
-                        <img src='assets/event1.jpg' alt='' style='width: 100%;'>
-                        <h2>{$ticket['title']}</h2>
-                        <div class='ticket-details'>
-                            <p>Quantity: {$ticket['total_quantity']}</p>
-                            <p>Total: MUR " . number_format($ticket['ticket_price'] * $ticket['total_quantity'], 2) . "</p>
-                            <p>Location: {$ticket['location']}</p>
-                            <p>Time: {$ticket['time']}</p>
-                            <p>Purchased: " . date('d M Y', strtotime($ticket['purchase_date'])) . "</p>
-                        </div>
-                    </div>";
-                }
-                echo "</div></div>";
-            }
-        } else {
-            echo "<p>You haven't purchased any tickets yet.</p>";
-        }
-        ?>
-    </section>
-        
-
-
-
-
-
+    <?php include 'footer.html'; ?>
 </body>
 </html>
-
-<?php include 'footer.html' ?>

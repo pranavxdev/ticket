@@ -5,7 +5,7 @@
         <a href="index.php" id="logo" class="uppercase">dodorave</a>
 
         <nav>
-            <a href="aboutus.php">About us</a>
+            <a href="aboutus.php"">About us</a>
             <a href="help.php">Help</a>
         </nav>
     </div>

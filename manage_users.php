@@ -39,13 +39,14 @@ if (isset($_POST['toggle_admin'])) {
         }
         
         .user-item {
-            background: white;
+            background: #ffffff;
             padding: 15px;
             margin-bottom: 10px;
             border-radius: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid #e5e5e5;
         }
         
         .user-info {
@@ -54,12 +55,12 @@ if (isset($_POST['toggle_admin'])) {
         
         .user-info h3 {
             margin: 0 0 5px 0;
-            color: #333;
+            color: #000000;
         }
         
         .user-info p {
             margin: 0;
-            color: #666;
+            color: #666666;
         }
         
         .user-actions {
@@ -72,16 +73,25 @@ if (isset($_POST['toggle_admin'])) {
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
         
         .admin-btn {
-            background: #2196F3;
-            color: white;
+            background: #2563eb;
+            color: #ffffff;
+        }
+        
+        .admin-btn:hover {
+            background: #1d4ed8;
         }
         
         .delete-btn {
-            background: #f44336;
-            color: white;
+            background: #dc2626;
+            color: #ffffff;
+        }
+        
+        .delete-btn:hover {
+            background: #b91c1c;
         }
         
         .search-box {
@@ -89,19 +99,10 @@ if (isset($_POST['toggle_admin'])) {
             padding: 10px;
             width: 100%;
             max-width: 300px;
-            border: 1px solid #ddd;
+            border: 1px solid #e5e5e5;
             border-radius: 4px;
-        }
-        
-        .homepage-btn {
-            background-color: #4CAF50;
-            color: white;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .homepage-btn:hover {
-            background-color: #45a049;
+            background: #ffffff;
+            color: #000000;
         }
     </style>
 </head>
@@ -112,12 +113,12 @@ if (isset($_POST['toggle_admin'])) {
                 <h2>Admin Panel</h2>
             </div>
             <nav>
-                <a href="index.php" class="homepage-btn"><i class="fas fa-globe"></i> Homepage</a>
-                <a href="admin.php"><i class="fas fa-home"></i> Dashboard</a>
-                <a href="manage_events.php"><i class="fas fa-calendar"></i> Manage Events</a>
-                <a href="manage_users.php" class="active"><i class="fas fa-users"></i> Manage Users</a>
-                <a href="manage_orders.php"><i class="fas fa-ticket-alt"></i> Manage Orders</a>
-                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="index.php" class="homepage-btn">Homepage</a>
+                <a href="admin.php">Dashboard</a>
+                <a href="manage_events.php">Manage Events</a>
+                <a href="manage_users.php" class="active">Manage Users</a>
+                <a href="manage_orders.php">Manage Orders</a>
+                <a href="logout.php">Logout</a>
             </nav>
         </aside>
 

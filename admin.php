@@ -27,89 +27,28 @@ $recent_orders = mysqli_query($conn, "SELECT t.*, e.title as event_title, u.user
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>DodoRave Admin Panel</title>
+    <title>Dodo Rave Admin Panel</title>
     <link rel="stylesheet" href="admin.css" />
-    <style>
-        .recent-orders {
-            margin-top: 30px;
-        }
-        
-        .recent-orders h2 {
-            margin-bottom: 20px;
-        }
-        
-        .order-list {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        
-        .order-item {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .order-item:last-child {
-            border-bottom: none;
-        }
-        
-        .order-item h3 {
-            margin: 0 0 5px 0;
-            color: #333;
-        }
-        
-        .order-item p {
-            margin: 0;
-            color: #666;
-        }
-        
-        .stats-card {
-            text-align: center;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .stats-card h3 {
-            margin: 0 0 10px 0;
-            color: #333;
-        }
-        
-        .stats-card p {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 0;
-            color: #111;
-        }
-        
-        .homepage-btn {
-            color: white;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
-        }
-        
-    </style>
 </head>
 <body>
     <div class="admin-wrapper">
-        <aside class="sidebar">
+        <div class="sidebar">
             <div class="logo">
                 <h2>Admin Panel</h2>
             </div>
             <nav>
-                <a href="index.php" class="homepage-btn"><i class="fas fa-globe"></i> Homepage</a>
-                <a href="admin.php" class="active"><i class="fas fa-home"></i> Dashboard</a>
-                <a href="manage_events.php"><i class="fas fa-calendar"></i> Manage Events</a>
-                <a href="manage_users.php"><i class="fas fa-users"></i> Manage Users</a>
-                <a href="manage_orders.php"><i class="fas fa-ticket-alt"></i> Manage Orders</a>
-                <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="index.php" class="homepage-btn">Homepage</a>
+                <a href="admin.php">Dashboard</a>
+                <a href="manage_events.php">Manage Events</a>
+                <a href="manage_users.php">Manage Users</a>
+                <a href="manage_orders.php">Manage Orders</a>
+                <a href="logout.php">Logout</a>
             </nav>
-        </aside>
+        </div>
 
         <main class="main-content">
             <header>
-                <h1>Welcome, Admin</h1>
+                <h1>Dashboard</h1>
             </header>
             
             <section class="cards">

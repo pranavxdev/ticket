@@ -2,187 +2,6 @@
 <?php include 'header.php';?>
 <?php include 'db.php'; ?>
 
-<style>
-    <?php include 'styles.css' ?>
-    
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-    * {
-        font-family: 'Inter', sans-serif;
-    }
-    
-    .slideshow {
-        position: relative;
-        width: 64%;
-        height: 500px;
-        overflow: hidden;
-        background: #1a1a1a;
-        margin: 0 auto;
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .slideshow-container {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-        height: 100%;
-    }
-
-    .slide {
-        min-width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-    }
-
-    .slide-content {
-        display: flex;
-        align-items: center;
-        gap: 32px;
-        padding: 16px 32px;
-        max-width: 1200px;
-        margin: 0;
-    }
-
-    .slide-image {
-        width: 400px;
-        height: 300px;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .slide-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-
-    .slide-info {
-        color: #ffffff;
-        max-width: 500px;
-    }
-
-    .slide-info h2 {
-        font-size: 48px;
-        font-weight: 700;
-        margin-bottom: 16px;
-        text-transform: uppercase;
-        color: #ffffff;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .slide-info .event-details {
-        display: flex;
-        gap: 24px;
-        margin-bottom: 24px;
-    }
-
-    .slide-info .event-detail {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: #e0e0e0;
-    }
-
-    .slide-info .event-detail svg {
-        width: 20px;
-        height: 20px;
-        stroke: #e0e0e0;
-    }
-
-    .slide-info .event-detail p {
-        margin: 0;
-        font-size: 16px;
-        color: #e0e0e0;
-    }
-
-    .slide-info .description {
-        font-size: 18px;
-        color: #cccccc;
-        margin-bottom: 24px;
-        line-height: 1.5;
-    }
-
-    .slide-info a {
-        display: inline-block;
-        background: #4a90e2;
-        color: #ffffff;
-        padding: 12px 24px;
-        border-radius: 24px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 10px rgba(74, 144, 226, 0.3);
-    }
-
-    .slide-info a:hover {
-        background: #357abd;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
-    }
-
-    .slideshow-nav {
-        position: absolute;
-        bottom: 24px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 12px;
-    }
-
-    .nav-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .nav-dot.active {
-        background: #4a90e2;
-        box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
-    }
-
-    .slideshow-arrows {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        transform: translateY(-50%);
-        display: flex;
-        justify-content: space-between;
-        padding: 0 24px;
-    }
-
-    .arrow {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .arrow:hover {
-        background: rgba(74, 144, 226, 0.2);
-        transform: scale(1.1);
-    }
-
-    .arrow svg {
-        width: 24px;
-        height: 24px;
-        color: #ffffff;
-    }
-</style>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -191,14 +10,16 @@
     <title>Dodo Rave - Rave Events in Mauritius</title>
     <link rel="icon" type="image/png" href="assets/icon.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     
 <main>
+    <div class="ball"></div>
     <div class="slideshow">
         <div class="slideshow-container">
             <?php
-            $sql = "SELECT * FROM events ORDER BY date ASC";
+            $sql = "SELECT * FROM events WHERE featured = 1 ORDER BY date ASC";
             $result = mysqli_query($conn, $sql);
             
             while($event = mysqli_fetch_assoc($result)) {
@@ -235,7 +56,7 @@
                                     <p>{$event['location']}</p>
                                 </div>
                             </div>
-                            <a href='event.php?id={$event['id']}' class='info-btn'>More Info →</a>
+                            <a href='event.php?id={$event['id']}'>More Info →</a>
                         </div>
                     </div>
                 </div>";
@@ -244,7 +65,7 @@
         </div>
         <div class="slideshow-nav">
             <?php
-            $result = mysqli_query($conn, "SELECT COUNT(*) as total FROM events");
+            $result = mysqli_query($conn, "SELECT COUNT(*) as total FROM events WHERE featured = 1");
             $total_slides = mysqli_fetch_assoc($result)['total'];
             for($i = 0; $i < $total_slides; $i++) {
                 echo "<div class='nav-dot" . ($i === 0 ? " active" : "") . "' data-slide='$i'></div>";
@@ -285,8 +106,10 @@
                     <p>{$row['date']}</p>
                 </div>
                     <img src='{$row['event_image']}' alt='' style='width: 100%;'>
-                    <h2> {$row['title']} </h2>
-                    <a href='event.php?id={$row['id']}' class='info-btn'>More Info →</a>
+                    <div class='card-info'>
+                        <h2> {$row['title']} </h2>
+                        <a href='event.php?id={$row['id']}' class='info-btn'>More Info →</a>
+                    </div>
                 </div>";
             }
             ?>
