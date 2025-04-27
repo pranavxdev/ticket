@@ -9,7 +9,8 @@ $eventsTable = "CREATE TABLE IF NOT EXISTS events (
     time TIME,
     total_tickets INT,
     ticket_price DECIMAL(10,2),
-    event_image VARCHAR(255)
+    event_image VARCHAR(255),
+    featured TINYINT(1) DEFAULT 0
 )";
 
 $usersTable = "CREATE TABLE IF NOT EXISTS users (

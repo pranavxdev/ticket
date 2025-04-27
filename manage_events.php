@@ -2,20 +2,20 @@
 session_start();
 include 'db.php';
 
-// Redirect if not admin
+// Check if user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['username'] !== 'admin') {
     header("Location: login.php");
     exit;
 }
 
-// Handle event deletion
+// Handle event deletion request
 if (isset($_POST['delete_event'])) {
     $event_id = $_POST['event_id'];
     
-    // First delete all tickets associated with this event
+    // Delete all associated tickets first to maintain referential integrity
     mysqli_query($conn, "DELETE FROM tickets WHERE event_id = $event_id");
     
-    // Then delete the event
+    // Delete the event after removing associated tickets
     if(mysqli_query($conn, "DELETE FROM events WHERE id = $event_id")) {
         header("Location: manage_events.php");
         exit;
@@ -24,8 +24,9 @@ if (isset($_POST['delete_event'])) {
     }
 }
 
-// Handle event creation/update
+// Handle event creation or update
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
+    // Sanitize and get form data
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $description = mysqli_real_escape_string($conn, $_POST['description']);
     $location = mysqli_real_escape_string($conn, $_POST['location']);
@@ -37,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
     $featured = intval($_POST['featured']);
     
     if (isset($_POST['event_id'])) {
-        // Update existing event
+        // Update existing event in database
         $event_id = $_POST['event_id'];
         $query = "UPDATE events SET 
                   title = '$title',
@@ -51,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
                   featured = $featured
                   WHERE id = $event_id";
     } else {
-        // Create new event
+        // Insert new event into database
         $query = "INSERT INTO events (title, description, location, date, time, total_tickets, ticket_price, event_image, featured) 
                   VALUES ('$title', '$description', '$location', '$date', '$time', $total_tickets, $ticket_price, '$event_image', $featured)";
     }
@@ -70,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
     <title>Manage Events - DodoRave Admin</title>
     <link rel="stylesheet" href="admin.css" />
     <style>
+        /* Event form container styling */
         .event-form {
             background: #ffffff;
             padding: 20px;
@@ -78,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             border: 1px solid #e5e5e5;
         }
         
+        /* Form input fields styling */
         .event-form input[type="text"],
         .event-form input[type="number"],
         .event-form input[type="date"],
@@ -93,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             color: #000000;
         }
         
+        /* Submit button styling */
         .event-form button {
             background: #2563eb;
             color: #ffffff;
@@ -107,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             background: #1d4ed8;
         }
 
+        /* Image preview container */
         .image-preview {
             margin: 10px 0;
             padding: 10px;
@@ -122,10 +127,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             margin: 0 auto;
         }
         
+        /* Events list container */
         .events-list {
             margin-top: 20px;
         }
         
+        /* Individual event item styling */
         .event-item {
             background: #ffffff;
             padding: 24px;
@@ -137,6 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             border: 1px solid #e5e5e5;
         }
 
+        /* Event information layout */
         .event-info {
             display: flex;
             align-items: flex-start;
@@ -144,6 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             flex: 1;
         }
 
+        /* Event image styling */
         .event-info img {
             width: 140px;
             height: 140px;
@@ -151,6 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             object-fit: cover;
         }
 
+        /* Event details section */
         .event-details {
             display: flex;
             flex-direction: column;
@@ -158,6 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             flex: 1;
         }
 
+        /* Event title styling */
         .event-details h3 {
             font-size: 24px;
             font-weight: 600;
@@ -170,6 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             gap: 12px;
         }
 
+        /* Featured event badge */
         .featured-badge {
             background: #2563eb;
             color: white;
@@ -179,12 +191,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             font-weight: 500;
         }
 
+        /* Event metadata grid */
         .event-meta {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
         }
 
+        /* Event metadata text */
         .event-meta p {
             font-size: 15px;
             color: #666666;
@@ -195,6 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             line-height: 1.4;
         }
 
+        /* Event metadata icons */
         .event-meta p svg {
             width: 18px;
             height: 18px;
@@ -202,6 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             flex-shrink: 0;
         }
 
+        /* Event statistics section */
         .event-stats {
             display: flex;
             gap: 24px;
@@ -210,6 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             border-top: 1px solid #e5e5e5;
         }
 
+        /* Individual stat styling */
         .event-stat {
             font-size: 14px;
             color: #666666;
@@ -219,6 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             font-weight: 500;
         }
 
+        /* Stat icons */
         .event-stat svg {
             width: 16px;
             height: 16px;
@@ -226,12 +244,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             flex-shrink: 0;
         }
         
+        /* Event action buttons container */
         .event-actions {
             display: flex;
             gap: 12px;
             margin-left: 32px;
         }
         
+        /* Action button styling */
         .event-actions button {
             padding: 10px 20px;
             border: none;
@@ -244,6 +264,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_event'])) {
             text-align: center;
         }
         
+        /* Edit button specific styling */
         .edit-btn {
             background: #2563eb;
             color: #ffffff;

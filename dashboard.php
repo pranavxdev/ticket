@@ -2,11 +2,13 @@
 <?php include 'header.php';?>
 <?php include 'db.php';
 
+// Check if user is logged in, redirect to login if not
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 
+// Get user information from session
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 ?>
@@ -19,11 +21,13 @@ $username = $_SESSION['username'];
     <title>Dashboard - DodoRave</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Base styles */
         body {
             font-family: 'Inter', sans-serif;
             background: #0f0f0f;
         }
 
+        /* Background gradient effect */
         .ball {
             position: fixed;
             top: 50%;
@@ -36,13 +40,14 @@ $username = $_SESSION['username'];
             z-index: -1;
         }
 
+        /* Main container layout */
         .container {
             width: 64%;
             margin: 0 auto;
             padding-bottom: 48px;
         }
 
-        /* User Profile Section */
+        /* User Profile Section Styles */
         .profile {
             background: rgba(26, 26, 26, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -55,12 +60,14 @@ $username = $_SESSION['username'];
             justify-content: space-between;
         }
 
+        /* User profile layout */
         .user-profile {
             display: flex;
             align-items: center;
             gap: 24px;
         }
 
+        /* User avatar styling */
         .avatar {
             width: 80px;
             height: 80px;
@@ -74,6 +81,7 @@ $username = $_SESSION['username'];
             color: white;
         }
 
+        /* User information text styles */
         .user-info h2 {
             font-size: 24px;
             color: white;
@@ -85,7 +93,7 @@ $username = $_SESSION['username'];
             font-size: 14px;
         }
 
-        /* Tickets Section */
+        /* Tickets Section Styles */
         .tickets {
             margin-top: 32px;
         }
@@ -97,13 +105,14 @@ $username = $_SESSION['username'];
             margin-bottom: 24px;
         }
 
+        /* Ticket grid layout */
         .ticket-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 24px;
         }
 
-        /* Ticket Card */
+        /* Individual ticket card styling */
         .ticket {
             background: rgba(26, 26, 26, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -111,6 +120,7 @@ $username = $_SESSION['username'];
             overflow: hidden;
         }
 
+        /* Ticket image container */
         .ticket-img {
             width: 100%;
             height: 200px;
@@ -123,6 +133,7 @@ $username = $_SESSION['username'];
             object-fit: cover;
         }
 
+        /* Date badge styling */
         .date {
             position: absolute;
             top: 12px;
@@ -137,6 +148,7 @@ $username = $_SESSION['username'];
             gap: 6px;
         }
 
+        /* Ticket information section */
         .ticket-info {
             padding: 24px;
         }
@@ -147,6 +159,7 @@ $username = $_SESSION['username'];
             margin-bottom: 12px;
         }
 
+        /* Ticket details grid */
         .details {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -168,6 +181,7 @@ $username = $_SESSION['username'];
             color: #2e92ff;
         }
 
+        /* Ticket footer section */
         .ticket-footer {
             display: flex;
             justify-content: space-between;
@@ -187,7 +201,7 @@ $username = $_SESSION['username'];
             font-weight: 700;
         }
 
-        /* Logout Button */
+        /* Logout button styling */
         .logout {
             background: rgba(255, 255, 255, 0.1);
             color: white;
@@ -205,7 +219,7 @@ $username = $_SESSION['username'];
             color: white;
         }
 
-        /* Responsive Design */
+        /* Responsive design breakpoints */
         @media (max-width: 1200px) {
             .container {
                 width: 80%;
@@ -224,20 +238,26 @@ $username = $_SESSION['username'];
     </style>
 </head>
 <body>
+    <!-- Background gradient element -->
     <div class="ball"></div>
+    
+    <!-- Main content container -->
     <div class="container">
-        <!-- User Profile -->
+        <!-- User Profile Section -->
         <div class="profile">
             <div class="user-profile">
+                <!-- User avatar with first letter of username -->
                 <div class="avatar">
-                        <?php echo strtoupper(substr($username, 0, 1)); ?>
-                    </div>
+                    <?php echo strtoupper(substr($username, 0, 1)); ?>
+                </div>
+                <!-- User information display -->
                 <div class="user-info">
                     <h2>@<?php echo $username; ?></h2>
                     <p>Welcome back to your dashboard</p>
                 </div>
             </div>
 
+            <!-- Logout form -->
             <form action="logout.php" method="post">
                 <button type="submit" class="logout">Log Out</button>
             </form>
